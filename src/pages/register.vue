@@ -75,7 +75,7 @@
 
 <script>
 import Footer from "../components/footer";
-import {Message} from "element-ui";
+// import {Message} from "element-ui";
 
 export default {
   name: "register",
@@ -112,11 +112,13 @@ export default {
     },
     step1() {
       if (!this.phone) {
-        Message.warning('请输入手机号')
+        // Message.warning('请输入手机号')
+        console.warn('请输入手机号')
         return
       }
       if (!this.verifyPhone(this.phone)) {
-        Message.warning('手机号输入错误，请核对')
+        // Message.warning('手机号输入错误，请核对')
+        console.warn('手机号输入错误，请核对')
         return
       }
       this.axios.post('/queryUser/', {
@@ -124,12 +126,14 @@ export default {
       }).then((res) => {
         let flag = res.data
         if (flag) {
-          Message.warning('该手机号已注册')
+          // Message.warning('该手机号已注册')
+          console.warn('该手机号已注册')
         } else {
           this.axios.post('/code/', {
             mobile: this.phone
           }).then(() => {
-            Message.success('发送成功')
+            // Message.success('发送成功')
+            console.log('发送成功')
             this.one = false;
             this.two = true;
             this.three = false;
@@ -143,29 +147,34 @@ export default {
     step2() {
       this.axios.get(`/code/${this.phone}/`).then((res) => {
         if (this.code.length !== 6) {
-          Message.warning('请输入正确的验证码')
+          // Message.warning('请输入正确的验证码')
+          console.warn('请输入正确的验证码')
           return
         }
         let code = res.data;
         if (code === this.code) {
-          Message.success('验证码校验成功')
+          // Message.success('验证码校验成功')
+          console.log('验证码校验成功')
           this.one = false;
           this.two = false;
           this.three = true;
           this.four = false
         } else {
-          Message.warning('验证码错误，请核对')
+          // Message.warning('验证码错误，请核对')
+          console.warn('验证码错误，请核对')
         }
       })
 
     },
     step3() {
       if (this.password !== this.repeat) {
-        Message.warning('两次输入的密码不一致，请重新输入');
+        // Message.warning('两次输入的密码不一致，请重新输入');
+        console.warn('两次输入的密码不一致，请重新输入');
         return
       }
       if (this.password.length < 6 || this.repeat.length < 6) {
-        Message.warning('密码必须大于6位数，请重新输入');
+        // Message.warning('密码必须大于6位数，请重新输入');
+        console.warn('密码必须大于6位数，请重新输入');
         return
       }
       this.axios.post('/users/', {
@@ -174,7 +183,8 @@ export default {
         mobile: this.phone,
         password: this.repeat
       }).then(() => {
-        Message.success('注册成功')
+        // Message.success('注册成功')
+        console.log('注册成功')
         this.one = false;
         this.two = false;
         this.three = false;

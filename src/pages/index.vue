@@ -29,16 +29,23 @@
           </ul>
         </div>
         <div class="swiper-box">
-          <swiper :options="swiperOptions">
-            <swiper-slide v-for="(item , idx) in sliderList" :key="idx">
+          <Swiper
+            :modules="modules"
+            :slidesPerView="1"
+            :loop="true"
+            :pagination="{ clickable: true }"
+            :navigation="true"
+            :autoplay="{
+              delay: 2500,
+              disableOnInteraction: false,
+            }"
+          >
+            <SwiperSlide v-for="(item , idx) in sliderList" :key="idx">
               <a v-bind:href="'/activity/'+item.id" target="_blank">
                 <img :src="item.img">
               </a>
-            </swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
-            <div class="swiper-button-prev" slot="button-prev"></div>
-            <div class="swiper-button-next" slot="button-next"></div>
-          </swiper>
+            </SwiperSlide>
+          </Swiper>
         </div>
         <div class="intro-right">
           <div class="user">
@@ -182,33 +189,26 @@
 </template>
 
 <script>
-import {swiper, swiperSlide} from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Pagination, Navigation, Autoplay } from 'swiper'
+import 'swiper/css'
+
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 import Modal from "../components/Modal";
 
 export default {
   name: "index",
   components: {
-    swiper,
-    swiperSlide,
+    Swiper,
+    SwiperSlide,
     Modal
   },
   props: ['category'],
   data() {
     return {
       showModal: false,
-      swiperOptions: {
-        autoplay: true,
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }
-      },
+      modules: [Pagination, Navigation, Autoplay],
       //http://mi.futurefe.com/imgs/slider/slide-1.jpg
       sliderList: [],
       newList: [],

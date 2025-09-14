@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import {Message} from 'element-ui'
+// import {Message} from 'element-ui'
 import {mapState} from 'vuex'
 
 export default {
@@ -102,7 +102,8 @@ export default {
       this.$store.dispatch('saveToken', '');
       this.$store.dispatch('saveUid', '');
       this.$store.dispatch('saveCartNums', 0);
-      Message.success('退出成功')
+      // Message.success('退出成功')
+      console.log('退出成功')
       this.$router.push('/index.html')
     },
     goToCart() {
@@ -118,7 +119,8 @@ export default {
     },
     goToSearch(key) {
       if (key === '') {
-        Message.warning('输入为空，请重新输入');
+        // Message.warning('输入为空，请重新输入');
+        console.warn('输入为空，请重新输入');
         return
       }
       // 打开新页面
@@ -320,7 +322,7 @@ export default {
     //background: #fff; // 奶白
     //box-shadow: 0 0 5px #FFFFFF; // 阴影
     //height: 40px;
-    background-color: #FF6600;
+    background-color: #8A2BE2;
 
     .container {
       width: 1190px;

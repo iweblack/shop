@@ -87,12 +87,18 @@
               <!--              </div>-->
               <div class="item-note">
                 <h2>订单留言</h2>
-                <el-input
+                <!-- <el-input
                     type="textarea"
                     autosize
                     placeholder="请输入订单留言"
                     v-model="note" class="text-note">
-                </el-input>
+                </el-input> -->
+                <textarea
+                    v-model="note"
+                    class="text-note"
+                    placeholder="请输入订单留言"
+                    rows="2"
+                ></textarea>
               </div>
               <!--              <div class="item-invoice">-->
               <!--                <h2>发票</h2>-->
@@ -186,7 +192,7 @@
 <script>
 import MyHeader from "../../components/MyHeader";
 import Modal from '../../components/Modal'
-import {Message} from "element-ui";
+// import {Message} from "element-ui";
 // import axios from "axios";
 
 export default {
@@ -353,7 +359,8 @@ export default {
     },
     goSettlement() {
       if (this.addressId === '') {
-        Message.warning('请选择收货地址或者添加新地址')
+        // Message.warning('请选择收货地址或者添加新地址')
+        console.warn('请选择收货地址或者添加新地址')
         return;
       }
 
@@ -432,6 +439,7 @@ export default {
           "is_select": false
         }).then(() => {
           // Message.success('地址编辑成功')
+          console.log('地址编辑成功')
           this.showEditModal = false;
           this.getAddress();
 
@@ -439,9 +447,10 @@ export default {
 
       } else if (flag === '删除地址') {
         this.axios.delete(`/address/${this.addressId}`).then(() => {
-          Message.success('地址删除成功')
+          // Message.success('地址删除成功')
+          console.log('地址删除成功')
           this.getAddress();
-          this.showEditModal = false;
+          this.showDelModal = false;
 
 
         })
@@ -456,7 +465,8 @@ export default {
           "stamp": this.checkedItem.receiverZip,
           "is_select": false
         }).then(() => {
-          Message.success('地址添加成功')
+          // Message.success('地址添加成功')
+          console.log('地址添加成功')
           this.showEditModal = false;
           this.getAddress();
         })

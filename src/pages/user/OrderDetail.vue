@@ -2,10 +2,10 @@
   <div class="order-detail">
     <div class="container">
       <div class="crumb">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
+        <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>订单详情</el-breadcrumb-item>
-        </el-breadcrumb>
+        </el-breadcrumb> -->
       </div>
       <div class="order-detail-body">
         <Side></Side>
@@ -117,7 +117,7 @@
 <script>
 import Side from "../../components/side";
 import {formatDate} from "../../utils/date";
-import {Message} from 'element-ui'
+// import {Message} from 'element-ui'
 
 export default {
   name: "message",
@@ -220,7 +220,8 @@ export default {
       console.log(val)
       this.axios.delete(`/orders/${val}/`).then(res => {
         console.log(res)
-        Message.success('订单取消成功')
+        // Message.success('订单取消成功')
+        console.log('订单取消成功')
       })
     },
     getTitle(val) {
@@ -239,7 +240,8 @@ export default {
       } else if (status === 'SUCCESS') {
         // if 大于15天  提示不可申请退款  else 就进入售后弹窗
       } else if (status === 'DELIVERY') {
-        Message.success('催促成功，我们将优先为您发货')
+        // Message.success('催促成功，我们将优先为您发货')
+        console.log('催促成功，我们将优先为您发货')
       } else if (status === 'GOOD') {
         // 弹出 modal 窗口
       } else if (status === 'COMMENT') {
@@ -254,7 +256,8 @@ export default {
         }
       }).then((res) => {
         if (res.data.total === 0) {
-          Message.warning('请核对订单号')
+          // Message.warning('请核对订单号')
+          console.warn('请核对订单号')
         } else {
           this.orderDetail = res.data.list[0];
           this.detailList = res.data.list[0].goods;

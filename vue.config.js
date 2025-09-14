@@ -1,7 +1,8 @@
 module.exports = {
     // http://127.0.0.1:8082/api
     // outputDir: './dist',
-    publicPath: '/shop-front/',
+    // publicPath: '/shop-front/',
+    lintOnSave: false,
     devServer: {
         host: '127.0.0.1',
         port: 8080,

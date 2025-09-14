@@ -3,10 +3,10 @@
 
     <div class="container">
       <div class="crumb">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
+        <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>账户设置</el-breadcrumb-item>
-        </el-breadcrumb>
+        </el-breadcrumb> -->
       </div>
       <div class="user-profile-body">
         <Side></Side>
@@ -26,21 +26,24 @@
 
                 <div class="profile-nickname">
                   昵称：
-                  <el-input v-model="userInfo.nickname" type="text" placeholder="请输入昵称"></el-input>
+                  <!-- <el-input v-model="userInfo.nickname" type="text" placeholder="请输入昵称"></el-input> -->
+                  <input type="text" v-model="userInfo.nickname" placeholder="请输入昵称">
                 </div>
                 <div class="profile-birthday">
                   生日：
-                  <el-date-picker
+                  <!-- <el-date-picker
                       v-model="userInfo.birthday"
                       type="date"
                       placeholder="选择日期"
                       value-format="yyyy-MM-dd">
-                  </el-date-picker>
+                  </el-date-picker> -->
+                  <input type="date" v-model="userInfo.birthday" value-format="yyyy-MM-dd">
                 </div>
 
                 <div class="profile-nickname">
                   邮箱：
-                  <el-input v-model="userInfo.email" placeholder="请输入邮箱" type="email"></el-input>
+                  <!-- <el-input v-model="userInfo.email" placeholder="请输入邮箱" type="email"></el-input> -->
+                  <input type="email" v-model="userInfo.email" placeholder="请输入邮箱">
                 </div>
                 <!--                <div class="profile-sex">-->
                 <!--                  <div>性别：</div>-->
@@ -53,7 +56,8 @@
 
               </div>
               <div class="wrap-button">
-                <el-button plain @click="submitUser()">提交</el-button>
+                <!-- <el-button plain @click="submitUser()">提交</el-button> -->
+                <button plain @click="submitUser()">提交</button>
 
               </div>
             </div>
@@ -100,7 +104,7 @@
 
 <script>
 import Side from "../../components/side";
-import {Message} from "element-ui";
+// import {Message} from "element-ui";
 
 export default {
   name: "profile",
@@ -132,7 +136,8 @@ export default {
         gender: this.radio,
         email: this.userInfo.email
       }).then(() => {
-        Message.success('修改成功')
+        // Message.success('修改成功')
+        console.log('修改成功')
         this.getUserInfo();
       })
     }

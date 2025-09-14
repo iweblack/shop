@@ -3,24 +3,31 @@
     <div class="container" v-if="errorFlag">
       <div class="product">
         <div class="crumb">
-          <el-breadcrumb separator-class="el-icon-arrow-right">
+          <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>{{ good.cateName }}</el-breadcrumb-item>
             <el-breadcrumb-item>{{ good.title }}</el-breadcrumb-item>
-          </el-breadcrumb>
+          </el-breadcrumb> -->
         </div>
         <div class="content">
           <div class="left">
-            <swiper :options="swiperOptions">
-              <swiper-slide v-for="(item , idx) in sliderList" :key="idx">
+            <Swiper
+              :modules="modules"
+              :slidesPerView="1"
+              :loop="true"
+              :pagination="{ clickable: true }"
+              :navigation="true"
+              :autoplay="{
+                delay: 2500,
+                disableOnInteraction: false,
+              }"
+            >
+              <SwiperSlide v-for="(item , idx) in sliderList" :key="idx">
                 <a href="javascript:;">
                   <img :src="item">
                 </a>
-              </swiper-slide>
-              <div class="swiper-pagination" slot="pagination"></div>
-              <div class="swiper-button-prev" slot="button-prev"></div>
-              <div class="swiper-button-next" slot="button-next"></div>
-            </swiper>
+              </SwiperSlide>
+            </Swiper>
           </div>
           <div class="right">
             <h2 class="item-title" v-html="good.title"></h2>
@@ -90,8 +97,9 @@
 
             <div class="item-nums">
               <h2>数量</h2>
-              <el-input-number v-model="num" @change="handleChange" :min="1" :max="10"
-                               class="num-right"></el-input-number>
+              <!-- <el-input-number v-model="num" @change="handleChange" :min="1" :max="10"
+                               class="num-right"></el-input-number> -->
+              <input type="number" v-model="num" @change="handleChange" :min="1" :max="10" class="num-right">
 
             </div>
             <template v-if="productName">
@@ -191,15 +199,19 @@
 
 <script>
 import Modal from "../../components/Modal";
-import {swiper, swiperSlide} from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
-import {Message} from "element-ui";
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Pagination, Navigation, Autoplay } from 'swiper'
+import 'swiper/css'
+
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
+// import {Message} from "element-ui";
 
 export default {
   name: "product",
   components: {
-    swiper,
-    swiperSlide,
+    Swiper,
+    SwiperSlide,
     Modal
   },
   data() {
@@ -212,18 +224,7 @@ export default {
       showModal: false,
       num: 1,
       version: '',
-      swiperOptions: {
-        autoplay: true,
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }
-      },
+      modules: [Pagination, Navigation, Autoplay],
       sliderList: [],
       good: {
         // 计算属性  先读取  避免报错
@@ -367,7 +368,8 @@ export default {
     goToOrder(version) {
       // version 是商品id
       if (version === '') {
-        Message.warning('请选择产品或规格')
+        // Message.warning('请选择产品或规格')
+        console.warn('请选择产品或规格')
         return
       }
       console.log(version, this.num)
@@ -378,11 +380,13 @@ export default {
     },
     outStcok(id) {
       console.log(id);
-      Message.warning('该商品已售罄，正在补货');
+      // Message.warning('该商品已售罄，正在补货');
+      console.warn('该商品已售罄，正在补货');
     },
     notifyGood(id) {
       console.log(id);
-      Message.success('商品到货后我们将以短信的形式通知您');
+      // Message.success('商品到货后我们将以短信的形式通知您');
+      console.log('商品到货后我们将以短信的形式通知您');
     },
     // 收藏的是产品 不是商品
     collectProduct(id) {
@@ -394,12 +398,14 @@ export default {
       this.axios.post('/collect/', {
         product: id
       }).then(() => {
-        Message.success('搜藏成功')
+        // Message.success('搜藏成功')
+        console.log('搜藏成功')
         this.getProduct(id);
       })
     },
     collected() {
-      Message.warning('该商品已收藏')
+      // Message.warning('该商品已收藏')
+      console.warn('该商品已收藏')
     },
     getCartNum() {
       this.axios.get('/carts/',).then((res) => {
@@ -408,7 +414,8 @@ export default {
     },
     addCart(gid) {
       if (gid === '') {
-        Message.warning('请选择产品或规格')
+        // Message.warning('请选择产品或规格')
+        console.warn('请选择产品或规格')
         return
       }
       // let good_id = this.good.id;
@@ -432,7 +439,8 @@ export default {
     },
     handleChange(value) {
       if (value === 10) {
-        Message.warning('最大购买数量为10')
+        // Message.warning('最大购买数量为10')
+        console.warn('最大购买数量为10')
       }
       // console.log(this.productPrice, typeof this.productPrice, value, this.productPrice * value)
       this.num = value;

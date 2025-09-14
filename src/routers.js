@@ -1,13 +1,11 @@
-import Vue from "vue"
-import Router from "vue-router"
+import { createRouter, createWebHistory } from "vue-router"
 import Home from "./pages/index/home";
 import Index from "./pages/index"
 
-Vue.use(Router)
-
 // 由router控路由 home组件是一个基本组件  index是main主题内容
-export default new Router({
-    mode: 'history',
+const routerHistory = createWebHistory()
+export default createRouter({
+    history: routerHistory,
     routes: [
         {
             path: '/',

@@ -3,10 +3,10 @@
 
     <div class="container">
       <div class="crumb">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
+        <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>售后列表</el-breadcrumb-item>
-        </el-breadcrumb>
+        </el-breadcrumb> -->
       </div>
       <div class="user-order-body">
         <Side></Side>
@@ -79,13 +79,13 @@
 
             <div class="order-page">
               <div class="page">
-                <el-pagination
+                <!-- <el-pagination
                     @current-change="handleCurrentChange"
                     :page-size="pageSize"
                     :pager-count="5"
                     layout="prev, pager, next"
                     :total="total">
-                </el-pagination>
+                </el-pagination> -->
               </div>
             </div>
           </div>
@@ -98,7 +98,7 @@
 <script>
 import Side from "../../components/side";
 import {formatDate} from '../../utils/date';
-import {Message} from "element-ui";
+// import {Message} from "element-ui";
 
 export default {
   name: "order",
@@ -219,7 +219,8 @@ export default {
       } else if (status === 'SUCCESS') {
         // if 大于15天  提示不可申请退款  else 就进入售后弹窗
       } else if (status === 'DELIVERY') {
-        Message.success('催促成功，我们将优先为您发货')
+        // Message.success('催促成功，我们将优先为您发货')
+        console.log('催促成功，我们将优先为您发货')
       } else if (status === 'GOOD') {
         // 弹出 modal 窗口
       } else if (status === 'COMMENT') {

@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {Message} from "element-ui";
+// import {Message} from "element-ui";
 
 export default {
   name: "MyHeader",
@@ -81,7 +81,8 @@ export default {
       this.$store.dispatch('saveToken', '');
       this.$store.dispatch('saveUid', '');
       this.$store.dispatch('saveCartNums', 0);
-      Message.success('退出成功')
+      // Message.success('退出成功')
+      console.log('退出成功')
       this.$router.push('/index.html')
     },
   }

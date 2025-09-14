@@ -58,7 +58,7 @@
 
 <script>
 import MyHeader from "../../components/MyHeader";
-import {Message} from "element-ui";
+// import {Message} from "element-ui";
 
 export default {
   name: "order",
@@ -106,7 +106,8 @@ export default {
     }).then((res) => {
       // console.log(res)
       if (res.data.total === 0) {
-        Message.warning('请核对订单号')
+        // Message.warning('请核对订单号')
+        console.warn('请核对订单号')
       } else {
         this.orderDetail = res.data.list[0];
         this.orderSn = orderSn;

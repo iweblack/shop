@@ -1,45 +1,42 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-
-// import JWT from "./storage/index"
+import { useStore } from 'vuex';
+import { onMounted } from 'vue';
+import axios from 'axios'; // Import axios directly
+import { useCookies } from '@vueuse/integrations/useCookies'
+import env from "./env"; // Assuming env is still needed for axios baseURL
 
 export default {
   name: 'App',
-  components: {},
-  data() {
-    return {}
-  },
-  mounted() {
-    this.$store.dispatch('saveUserName', this.$cookie.get('username'));
-    this.$store.dispatch('saveToken', this.$cookie.get('token'));
-    this.$store.dispatch('saveUid', this.$cookie.get('uid'));
-    // this.getCartNum();
-    // 不能从cookie里面获取 这样就写死了
-    // this.$store.dispatch('saveCartNums', this.$cookie.get('cart'));
-    if (this.$store.state.token) {
-      this.axios.get('/carts/',).then((res) => {
-        this.$store.dispatch('saveCartNums', res.data.total);
-      })
-    }
-  },
-  methods: {
-    // getCartNum() {
-    //   this.axios.get('/carts/',).then((res) => {
-    //     this.$store.dispatch('saveCartNums', res.data.total)
-    //   })
-    // },
-    // getUserInfo(uid) {
-    //   this.axios.get('/users/' + uid + '/', {
-    //     headers: {'Authorization': this.$cookie.get('token')}
-    //   }).then((res) => {
-    //     this.$store.dispatch('saveUserName', res.data.username)
-    //   })
-    // }
+  setup() {
+    const store = useStore();
+    const cookies = useCookies();
+
+    onMounted(() => {
+      // Ensure axios baseURL is set if not already set globally
+      if (!axios.defaults.baseURL) {
+        axios.defaults.baseURL = env.baseURL;
+      }
+      if (!axios.defaults.timeout) {
+        axios.defaults.timeout = 10000;
+      }
+
+      store.dispatch('saveUserName', cookies.get('username'));
+      store.dispatch('saveToken', cookies.get('token'));
+      store.dispatch('saveUid', cookies.get('uid'));
+
+      if (store.state.token) {
+        axios.get('/carts/').then((res) => {
+          store.dispatch('saveCartNums', res.data.total);
+        });
+      }
+    });
+
+    // Methods are not directly in setup, but can be defined if needed for template
+    // For this component, no methods are exposed to the template.
   }
 }
 </script>

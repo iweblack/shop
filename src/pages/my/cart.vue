@@ -58,7 +58,7 @@
 
 <script>
 import MyHeader from "../../components/MyHeader";
-import {Message} from "element-ui";
+// import {Message} from "element-ui";
 // import JWT from "../storage/index"
 
 export default {
@@ -116,7 +116,8 @@ export default {
       if (type === '-') {
         nums = --nums
         if (nums === 0) {
-          Message.warning('商品至少保留一件')
+          // Message.warning('商品至少保留一件')
+          console.warn('商品至少保留一件')
           return
         }
         this.axios.patch(`/carts/${goods}/`, {
@@ -137,7 +138,8 @@ export default {
     },
     deleteCart(goods_id) {
       this.axios.delete(`/carts/${goods_id}/`).then(() => {
-        Message.success('删除成功')
+        // Message.success('删除成功')
+        console.log('删除成功')
         this.getCart();
       })
 
@@ -155,14 +157,16 @@ export default {
     },
     goOrder() {
       if (this.cartsNums === 0) {
-        Message.warning('购物车为空，请添加商品')
+        // Message.warning('购物车为空，请添加商品')
+        console.warn('购物车为空，请添加商品')
         return;
       }
 
       // 全false 为true    有一个就是false
       let isCheck = this.carts.every(item => !item.is_select);
       if (isCheck) {
-        Message.warning('请至少选择一件商品')
+        // Message.warning('请至少选择一件商品')
+        console.warn('请至少选择一件商品')
         return;
       }
       this.$router.push('/confirm')
